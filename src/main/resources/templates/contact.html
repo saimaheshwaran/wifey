@@ -1,0 +1,102 @@
+<div class="container">
+  <!-- Contact Hero -->
+  <section class="py-3 rounded-3 mb-3">
+    <div class="container text-center">
+      <h1 class="display-4 fw-bold mb-3">Get in Touch</h1>
+      <p class="lead">I'm here to listen and support you spiritually</p>
+    </div>
+  </section>
+
+  <div class="row">
+    <!-- Contact Form -->
+    <div class="col-lg-7 mb-5 mb-lg-0">
+      <div class="card border-0 shadow-sm card-bg">
+        <div class="card-body p-4 p-md-5">
+          <h2 class="fw-bold mb-4">Send a Message</h2>
+
+          <form th:action="@{/contact}" method="post" th:object="${contactForm}">
+            <div th:if="${success}" class="alert alert-success">
+              Thank you for your message! I'll get back to you soon.
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="name" class="form-label">Your Name</label>
+                <input type="text" class="form-control" id="name" th:field="*{name}" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                  Name error
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                  Email error
+                </div>
+              </div>
+              <div class="col-12">
+                <label for="subject" class="form-label">Subject</label>
+                <input type="text" class="form-control" id="subject" th:field="*{subject}" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}">
+                  Subject error
+                </div>
+              </div>
+              <div class="col-12">
+                <label for="message" class="form-label">Message</label>
+                <textarea class="form-control" id="message" rows="5" th:field="*{message}" required></textarea>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('message')}" th:errors="*{message}">
+                  Message error
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-danger btn-lg px-4">Send Message</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="col-lg-5">
+      <div class="card border-0 shadow-sm card-bg">
+        <div class="card-body p-4 p-md-5">
+          <h3 class="h4 fw-bold mb-4">Scheduling</h3>
+          <p>To schedule a telechaplaincy session, please use the contact form or call directly. I offer:</p>
+          <ul class="mb-4">
+            <li>Initial 15-minute consultation (free)</li>
+            <li>Standard 45-minute sessions</li>
+            <li>Extended 90-minute sessions</li>
+          </ul>
+          <a href="#" class="btn btn-outline-danger w-100" data-bs-toggle="modal" data-bs-target="#schedulingModal">
+            <i class="far fa-calendar-alt me-2 icon-color"></i> View Available Times
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scheduling Modal -->
+  <div class="modal fade" id="schedulingModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Schedule a Session</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Embedded scheduling widget would go here -->
+          <div class="text-center py-4">
+            <i class="far fa-calendar-alt fa-4x text-primary mb-3"></i>
+            <h4>Scheduling System</h4>
+            <p class="mb-0">A scheduling widget would be integrated here</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

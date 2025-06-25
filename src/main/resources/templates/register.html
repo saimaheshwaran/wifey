@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragment/headTag :: headTag('Registration Page')}"></head>
+<body>
+
+<div class="d-flex align-items-center justify-content-center min-vh-100 py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <!-- Form Card -->
+                <div class="card shadow-lg border-0" style="background-color: rgba(0, 0, 60, 0.02);">
+                    <div class="card-body p-4">
+
+                        <!-- Title -->
+                        <h1 class="text-center mb-4 fs-2 fw-normal">Register</h1>
+
+                        <!-- Success Message -->
+                        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <span th:text="${successMessage}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <span th:text="${errorMessage}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+
+                        <!-- Registration Form -->
+                        <form th:action="@{/register}" th:object="${register}" method="post" id="registerForm">
+
+                            <!-- Username Field -->
+                            <div class="mb-3">
+                                <label for="username" class="form-label">
+                                    <i class="fas fa-user me-2"></i>Username <span class="text-danger">*</span>
+                                </label>
+                                <input type="text"
+                                       class="form-control form-control-lg"
+                                       th:classappend="${#fields.hasErrors('username')} ? 'is-invalid' : ''"
+                                       id="username"
+                                       name="username"
+                                       th:field="*{username}">
+
+                                <!-- Spring Validation Error Messages -->
+                                <div th:if="${#fields.hasErrors('username')}" class="invalid-feedback d-block">
+                                    <!--                  <i class="fas fa-exclamation-circle me-1"></i>-->
+                                    <ul class="list-unstyled mb-0">
+                                        <li th:each="error : ${#fields.errors('username')}" th:text="${error}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Email Field -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label">
+                                    <i class="fas fa-envelope me-2"></i>Email <span class="text-danger">*</span>
+                                </label>
+                                <input type="email"
+                                       class="form-control form-control-lg"
+                                       th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+                                       id="email"
+                                       name="email"
+                                       th:field="*{email}">
+
+                                <!-- Spring Validation Error Messages -->
+                                <div th:if="${#fields.hasErrors('email')}" class="invalid-feedback d-block">
+                                    <!--                  <i class="fas fa-exclamation-circle me-1"></i>-->
+                                    <ul class="list-unstyled mb-0">
+                                        <li th:each="error : ${#fields.errors('email')}" th:text="${error}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Password Field -->
+                            <div class="mb-4">
+                                <label for="password" class="form-label">
+                                    <i class="fas fa-lock me-2"></i>Password <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="password"
+                                           class="form-control form-control-lg"
+                                           th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"
+                                           id="password"
+                                           name="password"
+                                           th:field="*{password}">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()" tabindex="-1">
+                                        <i class="fas fa-eye" id="toggleIcon"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Spring Validation Error Messages -->
+                                <div th:if="${#fields.hasErrors('password')}" class="invalid-feedback d-block mt-1">
+                                    <!--                  <i class="fas fa-exclamation-circle me-1"></i>-->
+                                    <ul class="list-unstyled mb-0">
+                                        <li th:each="error : ${#fields.errors('password')}" th:text="${error}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-dark btn-lg">
+                                    Submit
+                                </button>
+                            </div>
+
+                            <!-- Login Link -->
+                            <div class="text-center mt-3">
+                                <p class="mb-0">Already have an account?
+                                    <a href="/login" class="text-decoration-none fw-medium">Login here</a>
+                                </p>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragment/jsTag}"></div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragment/headTag :: headTag('Login Page')}"></head>
+<body>
+
+<div class="d-flex align-items-center justify-content-center min-vh-100 py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <!-- Form Card -->
+                <div class="card shadow-lg border-0" style="background-color: rgba(0, 0, 60, 0.02);">
+                    <div class="card-body p-4">
+
+                        <!-- Title -->
+                        <h1 class="text-center mb-4 fs-2 fw-normal">Login</h1>
+
+                        <!-- Success Message -->
+                        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show"
+                             role="alert">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <span th:text="${successMessage}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show"
+                             role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <span th:text="${errorMessage}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+
+                        <!-- Login Form -->
+                        <form th:action="@{/login}" method="post" th:object="${user}" id="loginForm">
+
+                            <!-- Username/Email Field -->
+                            <div class="mb-3">
+                                <label for="username" class="form-label">
+                                    <i class="fas fa-user me-2"></i>Username<span class="text-danger">*</span>
+                                </label>
+                                <input type="text"
+                                       class="form-control form-control-lg"
+                                       th:classappend="${#fields.hasErrors('username')} ? 'is-invalid' : ''"
+                                       id="username"
+                                       name="username"
+                                       required>
+                            </div>
+
+                            <!-- Password Field -->
+                            <div class="mb-4">
+                                <label for="password" class="form-label">
+                                    <i class="fas fa-lock me-2"></i>Password <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="password"
+                                           class="form-control form-control-lg"
+                                           th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"
+                                           id="password"
+                                           name="password"
+                                           required>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()"
+                                            tabindex="-1">
+                                        <i class="fas fa-eye" id="toggleIcon"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Remember Me Checkbox -->
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe" name="remember-me">
+                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-dark btn-lg">
+                                    Submit
+                                </button>
+                            </div>
+
+                            <!-- Forgot Password and Register Links -->
+                            <div class="d-flex justify-content-between mt-3">
+                                <a href="/forgot-password" class="text-decoration-none">Forgot password?</a>
+                                <span>Don't have an account? <a href="/register" class="text-decoration-none fw-medium">Register</a></span>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="~{fragment/jsTag}"></div>
+</body>
+</html>

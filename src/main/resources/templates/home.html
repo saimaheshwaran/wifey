@@ -1,0 +1,106 @@
+
+<div>
+    <!-- Hero Section -->
+    <section class="hero py-1 rounded-3 mb-1">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Spiritual Care Wherever You Are</h1>
+                    <p class="lead mb-4">Professional hindu chaplaincy services delivered virtually to support your spiritual and emotional needs.</p>
+                    <a href="/contact" class="btn btn-danger btn-lg px-4 me-2">Get in Touch</a>
+                    <a href="/about" class="btn btn-danger btn-lg px-4">Learn More</a>
+                </div>
+                <div class="col-lg-6 mt-3">
+                    <img th:src="@{image/swathi.jpg}" alt="Peaceful imagery" class="img-fluid rounded-3 shadow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="mb-5 container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">How I Can Help</h2>
+            <p class="lead text-muted">Providing compassionate spiritual support in challenging times</p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm card-bg">
+                    <div class="card-body text-center p-4">
+                        <div class="bg-opacity-10 text-primary rounded-circle p-3 d-inline-block mb-3" style="background-color: rgba(245, 175, 25, 0.3);">
+                            <i class="fas fa-hands-helping fa-2x icon-color"></i>
+                        </div>
+                        <h4 class="card-title">Spiritual Counseling</h4>
+                        <p class="card-text">One-on-one sessions to explore faith, meaning, and purpose during difficult times.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm card-bg">
+                    <div class="card-body text-center p-4">
+                        <div class="bg-opacity-10 text-primary rounded-circle p-3 d-inline-block mb-3" style="background-color: rgba(245, 175, 25, 0.3);">
+                            <i class="fas fa-heart fa-2x icon-color"></i>
+                        </div>
+                        <h4 class="card-title">Grief Support</h4>
+                        <p class="card-text">Companionship through loss with compassionate listening and spiritual resources.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm card-bg">
+                    <div class="card-body text-center p-4">
+                        <div class="bg-opacity-10 text-primary rounded-circle p-3 d-inline-block mb-3" style="background-color: rgba(245, 175, 25, 0.3);">
+                            <i class="fas fa-hands-praying fa-2x icon-color"></i>
+                        </div>
+                        <h4 class="card-title">Prayer & Ritual</h4>
+                        <p class="card-text">Sacred moments tailored to your spiritual tradition or personal beliefs.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Recent Blog Posts -->
+    <section class="mb-5 container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold">From the Blog</h2>
+            <a href="/blog" class="btn btn-danger">View All</a>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4" th:each="post : ${recentPosts}">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img th:src="${post.imageUrl}" class="card-img-top" alt="Blog post image">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between small text-muted mb-2">
+                            <span th:text="${#temporals.format(post.publishedDate, 'MMMM d, yyyy')}">Date</span>
+                            <span><i class="far fa-comment me-1"></i> <span th:text="${post.commentCount}">0</span></span>
+                        </div>
+                        <h5 class="card-title" th:text="${post.title}">Post Title</h5>
+                        <p class="card-text" th:text="${post.summary}">Post summary...</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <a th:href="@{'/blog/post/' + ${post.id}}" class="btn btn-sm btn-outline-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial -->
+    <section class="p-5 rounded-3 container mb-5 card-bg">
+        <div class="text-center rounded-circle">
+            <i class="fas fa-quote-left fa-3x text-primary opacity-25 mb-3"></i>
+            <blockquote class="blockquote">
+                <p class="fs-4 mb-4">"The telechaplaincy sessions provided me with comfort and guidance during my hospitalization when I couldn't have in-person visitors. It made all the difference in my recovery."</p>
+                <footer class="blockquote-footer">Sarah M., Client</footer>
+            </blockquote>
+        </div>
+    </section>
+
+</div>

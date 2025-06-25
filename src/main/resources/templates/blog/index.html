@@ -1,0 +1,94 @@
+<div class="container">
+  <!-- Blog Hero -->
+  <section class="py-3 rounded-3 mb-3">
+    <div class="container text-center">
+      <h1 class="display-4 fw-bold mb-3">Spiritual Reflections</h1>
+      <p class="lead">Thoughts on faith, meaning, and finding hope in challenging times</p>
+    </div>
+  </section>
+
+  <!-- Blog Posts -->
+  <div class="row">
+    <!-- Main Content -->
+    <div class="col-lg-8">
+      <div class="row g-4" >
+        <div class="col-md-6" th:each="post : ${postPage}">
+          <div class="card h-100 border-0 shadow-sm card-bg">
+            <img th:src="${post.imageUrl}" class="card-img-top" alt="Blog post image">
+            <div class="card-body">
+              <div class="d-flex justify-content-between small text-muted mb-2">
+                <span th:text="${#temporals.format(post.publishedDate, 'MMMM d, yyyy')}">Date</span>
+                <span><i class="far fa-comment me-1"></i> <span th:text="${post.comments.Size}">0</span></span>
+              </div>
+              <h3 class="h5 card-title" th:text="${post.title}">Post Title</h3>
+              <p class="card-text" th:text="${post.summary}">Post summary...</p>
+            </div>
+            <div class="card-footer bg-transparent border-0">
+              <a th:href="@{'/blog/' + ${post.blogUrl}}" class="btn btn-sm btn-outline-danger">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <nav aria-label="Blog pagination" class="mt-5" th:if="${postPage.size > 0}">
+        <ul class="pagination justify-content-center">
+          <li th:class="${postPage.first} ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" th:href="@{/blog(page=0)}">&laquo;</a>
+          </li>
+          <li th:class="${postPage.hasPrevious()} ? 'page-item' : 'page-item disabled'">
+            <a class="page-link" th:href="@{/blog(page=${postPage.number - 1})}">Previous</a>
+          </li>
+          <li th:each="i : ${#numbers.sequence(postPage.number - 1, postPage.number + 1)}"
+              th:class="${postPage.number == i} ? 'page-item active' : 'page-item'">
+            <a class="page-link" th:if="${i >= 0 and i < postPage.totalPages}"
+               th:href="@{/blog(page=${i})}" th:text="${i + 1}"></a>
+          </li>
+          <li th:class="${postPage.hasNext()} ? 'page-item' : 'page-item disabled'">
+            <a class="page-link" th:href="@{/blog(page=${postPage.number + 1})}">Next</a>
+          </li>
+          <li th:class="${postPage.last} ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" th:href="@{/blog(page=${postPage.totalPages - 1})}">&raquo;</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+
+      <div class="card border-0 shadow-sm mb-4 body-bg">
+        <div class="card-body body-bg">
+          <h3 class="h5 card-title">Categories</h3>
+          <div class="list-group list-group-flush">
+            <a href="#" class="list-group-item list-group-item-action card-bg d-flex justify-content-between align-items-center">
+              Grief & Loss <span class="badge bg-danger rounded-pill">14</span>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action card-bg d-flex justify-content-between align-items-center">
+              Spiritual Practices <span class="badge bg-danger rounded-pill">8</span>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action card-bg d-flex justify-content-between align-items-center">
+              Healthcare Chaplaincy <span class="badge bg-danger rounded-pill">5</span>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action card-bg d-flex justify-content-between align-items-center">
+              Interfaith Perspectives <span class="badge bg-danger rounded-pill">12</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm body-bg">
+        <div class="card-body body-bg">
+          <h3 class="h5 card-title">Subscribe</h3>
+          <p class="card-text">Get new posts delivered to your inbox</p>
+          <form>
+            <div class="mb-3">
+              <input type="email" class="form-control" placeholder="Your email address">
+            </div>
+            <button type="submit" class="btn btn-danger w-100">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

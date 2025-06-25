@@ -1,0 +1,143 @@
+<div class="container">
+
+    <!-- Blog Post -->
+    <article class="mb-5">
+
+        <header class="mb-5">
+            <div class="text-muted mb-3" th:text="${#temporals.format(post.publishedDate, 'MMMM d, yyyy')}">Date</div>
+            <h1 class="fw-bold mb-3" th:text="${post.title}">Post Title</h1>
+            <div class="d-flex align-items-center">
+                <img th:src="${post.author.avatarUrl}" alt="Author" class="rounded-circle me-2" style="width: 50px; height: 50px;">
+                <div>
+                    <div class="fw-bold" th:text="${post.author.name}">Chaplain Name</div>
+                    <div class="text-muted small" th:text="${post.author.credentials}">Board Certified Chaplain</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- content -->
+        <div class="mb-5">
+            <img th:src="${post.imageUrl}" class="img-fluid rounded-3 mb-4" alt="Featured image">
+            <div th:utext="${post.content}">
+                <!-- Post content will be rendered here -->
+            </div>
+        </div>
+
+        <!-- Tags -->
+        <div class="mb-5">
+            <div class="d-flex flex-wrap gap-2">
+                <a th:each="tag : ${post.tags}" href="#" class="btn btn-sm btn-warning" th:text="${tag}">tag</a>
+            </div>
+        </div>
+
+        <!-- Reactions -->
+        <div class="border-top border-bottom py-4 mb-5">
+            <div class="d-flex justify-content-center gap-3">
+                <button class="btn btn-outline-success rounded-pill px-3 reaction-btn" data-reaction="like" th:blog-url="${post.blogUrl}" th:post-id="${post.id}">
+                    <i class="far fa-thumbs-up me-1"></i> Like <span class="badge bg-success ms-1" th:text="${post.likeCount}">0</span>
+                </button>
+                <button class="btn btn-outline-danger rounded-pill px-3 reaction-btn" data-reaction="love" th:blog-url="${post.blogUrl}" th:post-id="${post.id}">
+                    <i class="far fa-heart me-1"></i> Love <span class="badge bg-danger ms-1" th:text="${post.loveCount}">0</span>
+                </button>
+                <button class="btn btn-outline-secondary rounded-pill px-3 reaction-btn" data-reaction="thanks" th:blog-url="${post.blogUrl}" th:post-id="${post.id}">
+                    <i class="fas fa-praying-hands me-1"></i> Thanks <span class="badge bg-secondary ms-1" th:text="${post.thanksCount}">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Comments -->
+        <div class="mb-5" th:if="${post.commentFlag == true}">
+            <h3 class="h4 mb-4" th:text="'Comments (' + ${post.comments.size()} + ')'">Comments (0)</h3>
+
+            <!-- Comment List -->
+            <div class="mb-4" th:each="comment : ${post.comments}" th:if="${comment.parentComment == null}">
+                <div class="d-flex mb-3" >
+                    <i class="fa-regular fa-user me-3 rounded-circle" style="width: 25px; height: 25px;"></i>
+                    <div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <h5 class="mb-0 fw-bold" th:text="${comment.authorName}">Commenter Name</h5>
+                            <small class="text-muted" th:text="${#temporals.format(comment.date, 'MMM d, yyyy')}">Date</small>
+                        </div>
+                        <p class="mb-2" th:text="${comment.content}">Comment content...</p>
+                        <button class="btn btn-sm btn-outline-secondary"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                th:attr="data-bs-target='#replyForm-' + ${comment.id}" >Reply</button>
+
+                        <!-- Reply Form (Collapsed by default) -->
+                        <div class="collapse" th:id="'replyForm-' + ${comment.id}">
+                            <div class="card card-body mb-3 card-bg">
+                                <form th:action="@{'/blog/' + ${post.id} + '/comment'}" method="post">
+                                    <input type="hidden" name="comId" th:value="${comment.id}">
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" name="authorName" placeholder="Your Name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" name="content" rows="2" placeholder="Your Reply" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-danger btn-sm">Post Reply</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Replies -->
+                <div class="ms-5 ps-4 border-start" th:each="reply : ${comment.replies}">
+                    <div class="d-flex my-3">
+                        <i class="fa-regular fa-user me-3 rounded-circle" style="width: 25px; height: 25px;"></i>
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <h6 class="mb-0 fw-bold" th:text="${reply.authorName}">Reply Author</h6>
+                                <small class="text-muted" th:text="${#temporals.format(reply.date, 'MMM d, yyyy')}">Date</small>
+                            </div>
+                            <p class="mb-0 small" th:text="${reply.content}">Reply content...</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Comment Form -->
+            <div class="card border-0 shadow-sm card-bg">
+                <div class="card-body">
+                    <h4 class="h5 mb-3">Leave a Comment</h4>
+                    <form th:action="@{'/blog/' + ${post.id} + '/comment'}" method="post">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="authorName" placeholder="Your Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" name="content" rows="3" placeholder="Your Comment" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-danger">Post Comment</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </article>
+
+    <!-- Related Posts -->
+    <section class="mb-5">
+        <h3 class="h4 mb-4">Related Posts</h3>
+        <div class="row g-4">
+            <div class="col-md-4" th:each="relatedPost : ${relatedPosts}">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img th:src="${relatedPost.imageUrl}" class="card-img-top" alt="Related post image">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${relatedPost.title}">Related Post</h5>
+                        <p class="card-text small" th:text="${relatedPost.summary}">Post summary...</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <a th:href="@{'/blog/post/' + ${relatedPost.id}}" class="btn btn-sm btn-outline-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+

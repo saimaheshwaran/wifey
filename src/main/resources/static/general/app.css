@@ -1,0 +1,16 @@
+
+.navbar-bg {
+    background: linear-gradient(to right, #f12711, #f5af19);
+}
+
+.card-bg {
+    background-color: rgba(241, 39, 17, 0.1);
+}
+
+.body-bg {
+    background-color: rgba(245, 175, 25, 0.3);
+}
+
+.icon-color {
+    color: #f12711;
+}
