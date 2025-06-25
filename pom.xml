@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.sm</groupId>
-    <artifactId>newswave</artifactId>
-    <version>0.0.1</version>
-    <name>newswave</name>
-    <description>newswave</description>
+    <artifactId>wifey</artifactId>
+    <version>2.0.0</version>
+    <name>Swathi Anantha</name>
+    <description>Loving Wife</description>
     <url/>
     <licenses>
         <license/>
