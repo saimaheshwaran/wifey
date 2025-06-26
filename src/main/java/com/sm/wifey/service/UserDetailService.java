@@ -37,17 +37,17 @@ public class UserDetailService implements UserDetailsService {
         }
 
         // Create UserDetails object
-        return new org.springframework.security.core.userdetails.User(
-                username,
-                new BCryptPasswordEncoder().encode(user.getPassword()), // Ensure the password is encrypted
-                mapRolesToAuthorities(roles)
-        );
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getUsername())
+                .password(new BCryptPasswordEncoder().encode(user.getPassword())) // Ensure the password is encrypted
+                .authorities(mapRolesToAuthorities(roles))
+                .build();
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<User.Role> roles) {
         // Map your application's roles to Spring Security's GrantedAuthority
         return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.name()))
+                .map(role -> new SimpleGrantedAuthority(role.name().equalsIgnoreCase("ADMIN") ? "ROLE_ADMIN" : role.name()))
                 .collect(Collectors.toList());
     }
 

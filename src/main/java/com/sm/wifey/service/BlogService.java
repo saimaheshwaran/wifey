@@ -4,12 +4,14 @@ import com.sm.wifey.model.BlogComment;
 import com.sm.wifey.model.BlogPost;
 import com.sm.wifey.repository.BlogPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.Function;
 
 @Service
 public class BlogService {
@@ -30,6 +32,8 @@ public class BlogService {
     public BlogPost findBlogPostByBlogUrl(String url) {
         return blogPostRepository.findBlogPostByBlogUrl(url);
     }
+
+    public List<BlogPost> searchPosts(String keyword) { return blogPostRepository.searchPosts(keyword); }
 
     public void addComment(Long postId, Long comId, BlogComment comment) {
 

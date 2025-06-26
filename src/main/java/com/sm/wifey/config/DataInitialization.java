@@ -25,7 +25,7 @@ public class DataInitialization {
             if (authorRepository.count() == 0 && blogPostRepository.count() == 0) {
                 // Create main author
                 Author mainAuthor = new Author();
-                mainAuthor.setName("Rev. Dr. Sarah Johnson");
+                mainAuthor.setName("Swathi Anantha");
                 mainAuthor.setCredentials("Board Certified Chaplain, MDiv, BCC");
                 mainAuthor.setBio("With over 15 years of experience in hospital and hospice chaplaincy, Dr. Johnson brings deep spiritual care expertise to the digital space.");
                 mainAuthor.setAvatarUrl("/image/Swathi.jpg");

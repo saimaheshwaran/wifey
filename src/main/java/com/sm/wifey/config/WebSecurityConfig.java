@@ -4,6 +4,7 @@ import com.sm.wifey.service.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,14 +19,19 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    @Autowired
-    UserDetailService userDetailService;
+    private final UserDetailService userDetailService;
+
+    public WebSecurityConfig(UserDetailService userDetailService) {
+        this.userDetailService = userDetailService;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/", "/image/**", "/register/**", "/login/**"
                                 , "/h2-console/**", "/bootstrap/**", "/fontawesome/**"
                                 , "/general/**","/resources/**", "/about/**"
@@ -50,7 +56,8 @@ public class WebSecurityConfig {
                 .rememberMe(remember -> remember
                         .key("uniqueAndSecret")
                         .tokenValiditySeconds(86400) // 1 day
-                );
+                )
+        ;
 
         return http.build();
     }

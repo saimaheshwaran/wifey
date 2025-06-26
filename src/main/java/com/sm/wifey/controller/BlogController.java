@@ -5,9 +5,12 @@ import com.sm.wifey.model.BlogPost;
 import com.sm.wifey.service.BlogService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/blog")
@@ -19,6 +22,27 @@ public class BlogController {
     @GetMapping
     public String getBlog(@RequestParam(defaultValue = "0") int page, HttpServletRequest request, Model model) {
         model.addAttribute("postPage", blogService.blogPostPageRequest(page, 12));
+        model.addAttribute("requestURI", request.getRequestURI());
+        model.addAttribute("title", "Blog");
+        model.addAttribute("content", "blog/index");
+        return "layout";
+    }
+
+    @GetMapping("/search")
+    public String searchBlogs(@RequestParam("query") String query, Model model, HttpServletRequest request) {
+
+        List<BlogPost> searchResults = blogService.searchPosts(query);
+        Pageable pageable = PageRequest.of(0, 12);
+
+        // Sub-list to simulate pagination
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), searchResults.size());
+        List<BlogPost> pagedList = searchResults.subList(start, end);
+
+        // Wrap in PageImpl
+        Page<BlogPost> blogPage = new PageImpl<>(pagedList, pageable, searchResults.size());
+
+        model.addAttribute("postPage", blogPage);
         model.addAttribute("requestURI", request.getRequestURI());
         model.addAttribute("title", "Blog");
         model.addAttribute("content", "blog/index");
