@@ -3,8 +3,10 @@ package com.sm.wifey.config;
 import com.sm.wifey.model.Author;
 import com.sm.wifey.model.BlogComment;
 import com.sm.wifey.model.BlogPost;
+import com.sm.wifey.model.User;
 import com.sm.wifey.repository.AuthorRepository;
 import com.sm.wifey.repository.BlogPostRepository;
+import com.sm.wifey.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +21,8 @@ public class DataInitialization {
 
     @Bean
     public CommandLineRunner initData(AuthorRepository authorRepository,
-                                      BlogPostRepository blogPostRepository) {
+                                      BlogPostRepository blogPostRepository,
+                                      UserRepository userRepository) {
         return args -> {
             // Only initialize if database is empty
             if (authorRepository.count() == 0 && blogPostRepository.count() == 0) {
@@ -46,7 +49,7 @@ public class DataInitialization {
                         "The Art of Spiritual Listening",
                         "Essential skills for meaningful spiritual conversations",
                         "Active listening forms the foundation of all chaplaincy work...",
-                        "/image/blog/second_crispr.png", "second", false,
+                        "/image/blog/second_crispr.png", "second", true,
                         LocalDate.now().minusDays(14),
                         mainAuthor,
                         Arrays.asList("listening", "communication", "chaplaincy")
@@ -71,12 +74,21 @@ public class DataInitialization {
 
                 // Save posts again with comments
                 blogPostRepository.saveAll(Arrays.asList(post1, post2));
+
+                //Admin user
+                User user = new User();
+                user.setName("Sai Maheshwaran Rajan");
+                user.setUsername("Admin");
+                user.setPassword("Admin@123");
+                user.setPhone("000-000-0000");
+                user.setEmail("saimaheshwaran@outlook.com");
+                userRepository.save(user);
             }
         };
     }
 
     private BlogPost createBlogPost(String title, String summary, String content,
-                                    String imageUrl, String blogUrl, Boolean commentFlag, LocalDate publishedDate,
+                                    String imageUrl, String blogUrl, Boolean commentEnabled, LocalDate publishedDate,
                                     Author author, List<String> tags) {
         BlogPost post = new BlogPost();
         post.setTitle(title);
@@ -84,7 +96,7 @@ public class DataInitialization {
         post.setContent(content);
         post.setImageUrl(imageUrl);
         post.setBlogUrl(blogUrl);
-        post.setCommentFlag(commentFlag);
+        post.setCommentsEnabled(commentEnabled);
         post.setPublishedDate(publishedDate);
         post.setAuthor(author);
         post.setTags(tags);
@@ -101,6 +113,7 @@ public class DataInitialization {
         comment1.setContent("This really resonated with me. Thank you for sharing these insights.");
         comment1.setDate(LocalDateTime.now().minusDays(2));
         comment1.setPost(post);
+        comment1.setShowEnabled(true);
 
         BlogComment reply1 = new BlogComment();
         reply1.setAuthorName("Chaplain Sarah");
@@ -108,6 +121,7 @@ public class DataInitialization {
         reply1.setDate(LocalDateTime.now().minusDays(1));
         reply1.setPost(post);
         reply1.setParentComment(comment1);
+        reply1.setShowEnabled(true);
 
         BlogComment reply2 = new BlogComment();
         reply2.setAuthorName("Maria Garcia");
@@ -115,6 +129,7 @@ public class DataInitialization {
         reply2.setDate(LocalDateTime.now().minusHours(12));
         reply2.setPost(post);
         reply2.setParentComment(comment1);
+        reply2.setShowEnabled(true);
 
         comment1.setReplies(Arrays.asList(reply1, reply2));
 
@@ -124,6 +139,7 @@ public class DataInitialization {
         comment2.setContent("Could you recommend any resources for going deeper with this practice?");
         comment2.setDate(LocalDateTime.now().minusDays(1));
         comment2.setPost(post);
+        comment2.setShowEnabled(true);
 
         BlogComment reply3 = new BlogComment();
         reply3.setAuthorName("Chaplain Sarah");
@@ -131,6 +147,7 @@ public class DataInitialization {
         reply3.setDate(LocalDateTime.now().minusHours(6));
         reply3.setPost(post);
         reply3.setParentComment(comment2);
+        reply3.setShowEnabled(true);
 
         comment2.setReplies(List.of(reply3));
 

@@ -46,11 +46,11 @@
         </div>
 
         <!-- Comments -->
-        <div class="mb-5" th:if="${post.commentFlag == true}">
+        <div class="mb-5">
             <h3 class="h4 mb-4" th:text="'Comments (' + ${post.comments.size()} + ')'">Comments (0)</h3>
 
             <!-- Comment List -->
-            <div class="mb-4" th:each="comment : ${post.comments}" th:if="${comment.parentComment == null}">
+            <div class="mb-4" th:each="comment : ${post.comments}" th:if="${comment.parentComment == null and comment.showEnabled}">
                 <div class="d-flex mb-3" >
                     <i class="fa-regular fa-user me-3 rounded-circle" style="width: 25px; height: 25px;"></i>
                     <div>
@@ -85,7 +85,7 @@
                 </div>
 
                 <!-- Replies -->
-                <div class="ms-5 ps-4 border-start" th:each="reply : ${comment.replies}">
+                <div class="ms-5 ps-4 border-start" th:each="reply : ${comment.replies}" th:if="${reply.showEnabled}">
                     <div class="d-flex my-3">
                         <i class="fa-regular fa-user me-3 rounded-circle" style="width: 25px; height: 25px;"></i>
                         <div>
@@ -121,22 +121,25 @@
     </article>
 
     <!-- Related Posts -->
-    <section class="mb-5">
+    <section class="mb-5" th:if="${relatedPosts.size() > 0}">
+
         <h3 class="h4 mb-4">Related Posts</h3>
+
         <div class="row g-4">
             <div class="col-md-4" th:each="relatedPost : ${relatedPosts}">
-                <div class="card h-100 border-0 shadow-sm">
+                <div class="card h-100 border-0 shadow-sm card-bg">
                     <img th:src="${relatedPost.imageUrl}" class="card-img-top" alt="Related post image">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${relatedPost.title}">Related Post</h5>
                         <p class="card-text small" th:text="${relatedPost.summary}">Post summary...</p>
                     </div>
                     <div class="card-footer bg-transparent border-0">
-                        <a th:href="@{'/blog/post/' + ${relatedPost.id}}" class="btn btn-sm btn-outline-primary">Read More</a>
+                        <a th:href="@{'/blog/' + ${relatedPost.blogUrl}}" class="btn btn-sm btn-outline-danger">Read More</a>
                     </div>
                 </div>
             </div>
         </div>
+
     </section>
 
 </div>

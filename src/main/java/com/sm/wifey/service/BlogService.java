@@ -35,11 +35,14 @@ public class BlogService {
 
     public List<BlogPost> searchPosts(String keyword) { return blogPostRepository.searchPosts(keyword); }
 
+    public List<BlogPost> findBlogPostByTags(List<String> tags) { return blogPostRepository.findBlogByTags(tags); }
+
     public void addComment(Long postId, Long comId, BlogComment comment) {
 
         BlogPost post = findBlogPostById(postId);
         comment.setPost(post);
         comment.setDate(LocalDateTime.now());
+        comment.setShowEnabled(true);
 
         // If this is a reply, find the parent comment
         if (comId != null) {

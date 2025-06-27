@@ -22,6 +22,9 @@ public class BlogComment {
 
     private String content;
 
+    @Column(nullable = false, columnDefinition = "boolean default 'TRUE'")
+    private boolean showEnabled;
+
     @CreationTimestamp
     private LocalDateTime date;
 

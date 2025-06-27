@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/blog")
@@ -51,24 +52,28 @@ public class BlogController {
 
     @GetMapping("/{path}")
     public String getPostByPath(@PathVariable("path") String path, HttpServletRequest request, Model model) {
+
         BlogPost blogPost = blogService.findBlogPostByBlogUrl(path);
+        List<BlogPost> relatedPosts = blogService.findBlogPostByTags(blogPost.getTags())
+                .stream().filter(post -> !post.getId().equals(blogPost.getId())).toList();;
+
         model.addAttribute("post", blogPost);
-        model.addAttribute("requestURI", request.getRequestURI());
         model.addAttribute("title", blogPost.getTitle());
         model.addAttribute("content", "blog/post");
+        model.addAttribute("requestURI", request.getRequestURI());
+        model.addAttribute("relatedPosts", relatedPosts);
+
         return "layout";
     }
 
     @PostMapping("/{postId}/comment")
-    public String addComment(@PathVariable Long postId,
-                             @RequestParam(required = false) Long comId,
-                             BlogComment comment) {
+    public String addComment(@PathVariable Long postId, @RequestParam(required = false) Long comId, BlogComment comment) {
         blogService.addComment(postId, comId, comment);
         return "redirect:/blog/" + blogService.findBlogPostById(postId).getBlogUrl();
     }
 
-    @PostMapping("/{postId}/react/{reaction}")
     @ResponseBody
+    @PostMapping("/{postId}/react/{reaction}")
     public String addReaction(@PathVariable Long postId, @PathVariable String reaction) {
         int newCount = blogService.addReaction(postId, reaction);
         return "{\"success\": true, \"newCount\": " + newCount + "}";
