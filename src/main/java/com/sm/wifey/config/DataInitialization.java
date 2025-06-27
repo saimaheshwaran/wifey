@@ -42,7 +42,7 @@ public class DataInitialization {
                         "/image/blog/first_photo1.jpg", "first", true,
                         LocalDate.now().minusDays(7),
                         mainAuthor,
-                        Arrays.asList("hope", "spirituality", "resilience")
+                        Arrays.asList("hope", "spirituality", "innovation")
                 );
 
                 BlogPost post2 = createBlogPost(

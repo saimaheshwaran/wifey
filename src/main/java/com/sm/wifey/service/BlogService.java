@@ -35,7 +35,7 @@ public class BlogService {
 
     public List<BlogPost> searchPosts(String keyword) { return blogPostRepository.searchPosts(keyword); }
 
-    public List<BlogPost> findBlogPostByTags(List<String> tags) { return blogPostRepository.findBlogByTags(tags); }
+    public List<BlogPost> findBlogPostByTags(List<String> tags) { return blogPostRepository.findBlogPostByTags(tags); }
 
     public void addComment(Long postId, Long comId, BlogComment comment) {
 
