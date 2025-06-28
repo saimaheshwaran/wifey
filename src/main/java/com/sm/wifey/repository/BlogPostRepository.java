@@ -1,7 +1,6 @@
 package com.sm.wifey.repository;
 
 import com.sm.wifey.model.BlogPost;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
