@@ -1,0 +1,48 @@
+<div class="container">
+  <h2 class="mt-5">Contacts List</h2>
+  <br>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Subject</th>
+      <th>Message</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="contact : ${contactPage.content}">
+      <td th:text="${contact.name}"></td>
+      <td th:text="${contact.subject}"></td>
+      <td th:text="${contact.message}"></td>
+      <td th:text="${contact.email}"></td>
+      <td th:text="${contact.telephone}"></td>
+      <td th:text="${#dates.format(contact.createdAt, 'dd-MMM-yyyy')}"></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <nav aria-label="...">
+    <ul class="pagination justify-content-center">
+      <li th:class="${contactPage.first} ? 'page-item disabled' : 'page-item'">
+        <a class="page-link" th:href="@{/admin/contact(page=0)}">&laquo;</a>
+      </li>
+      <li th:class="${contactPage.hasPrevious()} ? 'page-item' : 'page-item disabled'">
+        <a class="page-link" th:href="@{/admin/contact(page=${contactPage.number - 1})}">Previous</a>
+      </li>
+      <li th:each="i : ${#numbers.sequence(contactPage.number - 1, contactPage.number + 1)}"
+          th:class="${contactPage.number == i} ? 'page-item active' : 'page-item'">
+        <a class="page-link" th:if="${i >= 0 and i < contactPage.totalPages}"
+           th:href="@{/admin/contact(page=${i})}" th:text="${i + 1}" ></a>
+      </li>
+      <li th:class="${contactPage.hasNext()} ? 'page-item' : 'page-item disabled'">
+        <a class="page-link" th:href="@{/admin/contact(page=${contactPage.number + 1})}">Next</a>
+      </li>
+      <li th:class="${contactPage.last} ? 'page-item disabled' : 'page-item'">
+        <a class="page-link" th:href="@{/admin/contact(page=${contactPage.totalPages - 1})}">&raquo;</a>
+      </li>
+    </ul>
+  </nav>
+</div>

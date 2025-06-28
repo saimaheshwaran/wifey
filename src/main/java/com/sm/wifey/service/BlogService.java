@@ -38,7 +38,7 @@ public class BlogService {
 
         BlogPost post = findBlogPostById(postId);
         comment.setPost(post);
-        comment.setDate(LocalDateTime.now());
+        comment.setCreatedAt(LocalDateTime.now());
         comment.setShowEnabled(true);
 
         // If this is a reply, find the parent comment

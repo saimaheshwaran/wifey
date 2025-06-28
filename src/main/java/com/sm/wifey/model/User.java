@@ -57,11 +57,11 @@ public class User {
     private String image = "https://placehold.co/600x400?text=News+Wave";
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "varchar(10) default 'USER'")
+    @Column(nullable = false, columnDefinition = "varchar(10)")
     private Role role = Role.USER;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "varchar(10) default 'INACTIVE'")
+    @Column(nullable = false, columnDefinition = "varchar(10)")
     private Status status = Status.INACTIVE;
 
     private String subscription;

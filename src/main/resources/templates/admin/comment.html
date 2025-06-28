@@ -1,0 +1,49 @@
+<div class="container">
+  <h2 class="mt-5">Comments List</h2>
+  <br>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Author</th>
+      <th>Message</th>
+      <th>Show</th>
+      <th>Post</th>
+      <th>ParentComment</th>
+      <th>Created Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="comment : ${commentPage.content}">
+      <td th:text="${comment.authorName}"></td>
+      <td th:text="${comment.content}"></td>
+      <td th:text="${comment.showEnabled}"></td>
+      <td th:text="${comment.post.id}"></td>
+      <td th:text="${comment.parentComment.id}" th:if="${comment.parentComment != null}"></td>
+      <td th:text="${comment.parentComment}" th:if="${comment.parentComment == null}"></td>
+      <td th:text="${#dates.format(comment.createdAt, 'dd-MMM-yyyy')}"></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <nav aria-label="...">
+    <ul class="pagination justify-content-center">
+      <li th:class="${commentPage.first} ? 'page-item disabled' : 'page-item'">
+        <a class="page-link" th:href="@{/admin/comment(page=0)}">&laquo;</a>
+      </li>
+      <li th:class="${commentPage.hasPrevious()} ? 'page-item' : 'page-item disabled'">
+        <a class="page-link" th:href="@{/admin/comment(page=${commentPage.number - 1})}">Previous</a>
+      </li>
+      <li th:each="i : ${#numbers.sequence(commentPage.number - 1, commentPage.number + 1)}"
+          th:class="${commentPage.number == i} ? 'page-item active' : 'page-item'">
+        <a class="page-link" th:if="${i >= 0 and i < commentPage.totalPages}"
+           th:href="@{/admin/comment(page=${i})}" th:text="${i + 1}" ></a>
+      </li>
+      <li th:class="${commentPage.hasNext()} ? 'page-item' : 'page-item disabled'">
+        <a class="page-link" th:href="@{/admin/comment(page=${commentPage.number + 1})}">Next</a>
+      </li>
+      <li th:class="${commentPage.last} ? 'page-item disabled' : 'page-item'">
+        <a class="page-link" th:href="@{/admin/comment(page=${commentPage.totalPages - 1})}">&raquo;</a>
+      </li>
+    </ul>
+  </nav>
+</div>

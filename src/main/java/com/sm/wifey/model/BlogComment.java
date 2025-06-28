@@ -22,11 +22,11 @@ public class BlogComment {
 
     private String content;
 
-    @Column(nullable = false, columnDefinition = "boolean default 'TRUE'")
-    private boolean showEnabled;
+    @Column(nullable = false)
+    private boolean showEnabled = true;
 
     @CreationTimestamp
-    private LocalDateTime date;
+    private LocalDateTime createdAt;
 
     @ManyToOne
     private BlogPost post;

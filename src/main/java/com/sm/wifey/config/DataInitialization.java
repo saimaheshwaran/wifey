@@ -111,14 +111,14 @@ public class DataInitialization {
         BlogComment comment1 = new BlogComment();
         comment1.setAuthorName("James Wilson");
         comment1.setContent("This really resonated with me. Thank you for sharing these insights.");
-        comment1.setDate(LocalDateTime.now().minusDays(2));
+        comment1.setCreatedAt(LocalDateTime.now().minusDays(2));
         comment1.setPost(post);
         comment1.setShowEnabled(true);
 
         BlogComment reply1 = new BlogComment();
         reply1.setAuthorName("Chaplain Sarah");
         reply1.setContent("Thank you for your kind words, James. I'm glad you found it helpful.");
-        reply1.setDate(LocalDateTime.now().minusDays(1));
+        reply1.setCreatedAt(LocalDateTime.now().minusDays(1));
         reply1.setPost(post);
         reply1.setParentComment(comment1);
         reply1.setShowEnabled(true);
@@ -126,7 +126,7 @@ public class DataInitialization {
         BlogComment reply2 = new BlogComment();
         reply2.setAuthorName("Maria Garcia");
         reply2.setContent("I agree with James. Your perspective on this is so valuable.");
-        reply2.setDate(LocalDateTime.now().minusHours(12));
+        reply2.setCreatedAt(LocalDateTime.now().minusHours(12));
         reply2.setPost(post);
         reply2.setParentComment(comment1);
         reply2.setShowEnabled(true);
@@ -137,14 +137,14 @@ public class DataInitialization {
         BlogComment comment2 = new BlogComment();
         comment2.setAuthorName("David Thompson");
         comment2.setContent("Could you recommend any resources for going deeper with this practice?");
-        comment2.setDate(LocalDateTime.now().minusDays(1));
+        comment2.setCreatedAt(LocalDateTime.now().minusDays(1));
         comment2.setPost(post);
         comment2.setShowEnabled(true);
 
         BlogComment reply3 = new BlogComment();
         reply3.setAuthorName("Chaplain Sarah");
         reply3.setContent("Certainly, David! I'll email you some reading suggestions.");
-        reply3.setDate(LocalDateTime.now().minusHours(6));
+        reply3.setCreatedAt(LocalDateTime.now().minusHours(6));
         reply3.setPost(post);
         reply3.setParentComment(comment2);
         reply3.setShowEnabled(true);
