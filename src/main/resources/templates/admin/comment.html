@@ -20,8 +20,7 @@
       <td th:text="${comment.post.id}"></td>
       <td th:text="${comment.parentComment.id}" th:if="${comment.parentComment != null}"></td>
       <td th:text="${comment.parentComment}" th:if="${comment.parentComment == null}"></td>
-      <td th:text="${comment.createdAt}"></td>
-<!--      <td th:text="${#dates.format(comment.createdAt, 'dd-MMM-yyyy')}"></td>-->
+      <td th:text="${#temporals.format(comment.createdAt, 'dd-MMM-yyyy hh:mm')}"></td>
     </tr>
     </tbody>
   </table>

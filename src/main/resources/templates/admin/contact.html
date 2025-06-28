@@ -8,7 +8,6 @@
       <th>Subject</th>
       <th>Message</th>
       <th>Email</th>
-      <th>Phone</th>
       <th>Date</th>
     </tr>
     </thead>
@@ -18,8 +17,7 @@
       <td th:text="${contact.subject}"></td>
       <td th:text="${contact.message}"></td>
       <td th:text="${contact.email}"></td>
-      <td th:text="${contact.telephone}"></td>
-      <td th:text="${#dates.format(contact.createdAt, 'dd-MMM-yyyy')}"></td>
+      <td th:text="${#temporals.format(contact.createdAt, 'dd-MMM-yyyy hh:mm')}"></td>
     </tr>
     </tbody>
   </table>
