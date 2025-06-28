@@ -4,6 +4,7 @@
   <table class="table table-bordered">
     <thead>
     <tr>
+      <th>Id</th>
       <th>Author</th>
       <th>Message</th>
       <th>Show</th>
@@ -14,6 +15,7 @@
     </thead>
     <tbody>
     <tr th:each="comment : ${commentPage.content}">
+      <td th:text="${comment.id}"></td>
       <td th:text="${comment.authorName}"></td>
       <td th:text="${comment.content}"></td>
       <td th:text="${comment.showEnabled}"></td>
