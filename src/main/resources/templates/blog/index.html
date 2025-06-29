@@ -4,6 +4,10 @@
     <div class="container text-center">
       <h1 class="display-4 fw-bold mb-3">Spiritual Reflections</h1>
       <p class="lead">Thoughts on faith, meaning, and finding hope in challenging times</p>
+      <!-- Success Message -->
+      <div th:if="${param.success}" class="alert alert-success mb-4">
+        Blog post updated successfully!
+      </div>
     </div>
   </section>
 
@@ -24,7 +28,10 @@
               <p class="card-text" th:text="${post.summary}">Post summary...</p>
             </div>
             <div class="card-footer bg-transparent border-0">
-              <a th:href="@{'/blog/' + ${post.blogUrl}}" class="btn btn-sm btn-outline-danger">Read More</a>
+              <a th:href="@{'/blog/' + ${post.blogUrl}}"
+                 class="btn btn-sm btn-outline-danger" th:if="${updateFlag==false}">Read More</a>
+              <a th:href="@{'/admin/blog/' + ${post.blogUrl}}"
+                 class="btn btn-sm btn-outline-danger" th:if="${updateFlag==true}">Update Blog</a>
             </div>
           </div>
         </div>
@@ -57,7 +64,16 @@
     <!-- Sidebar -->
     <div class="col-lg-4">
 
-      <div class="card border-0 shadow-sm mb-4 body-bg">
+      <div class="card border-0 shadow-sm mb-4 body-bg" th:if="${updateFlag==true}">
+        <div class="card-body body-bg">
+          <h3 class="h5 card-title">Blog service</h3>
+          <p class="card-text">Do you want to add a blog?</p>
+          <a th:href="@{'/admin/blog/add'}"
+             class="btn btn-sm btn-danger"> Click Here </a>
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm mb-4 body-bg" th:if="${updateFlag==false}">
         <div class="card-body body-bg">
           <h3 class="h5 card-title">Subscribe</h3>
           <p class="card-text">Get new posts delivered to your inbox</p>

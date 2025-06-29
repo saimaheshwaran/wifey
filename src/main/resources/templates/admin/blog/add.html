@@ -1,0 +1,84 @@
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">Add New Blog Post</h3>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/admin/blog/add}" th:object="${blogPost}" method="post">
+                        <!-- Success Message -->
+                        <div th:if="${param.success}" class="alert alert-success mb-4">
+                            Blog post added successfully!
+                        </div>
+
+                        <!-- Author Dropdown -->
+                        <div class="mb-3">
+                            <label for="author" class="form-label">Author</label>
+                            <select class="form-select" id="author" th:field="*{author}" required>
+                                <option value="">Select an author</option>
+                                <option th:each="author : ${authors}"
+                                        th:value="${author.id}"
+                                        th:text="${author.name} + ' (' + ${author.credentials} + ')'">
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" th:field="*{title}" required>
+                        </div>
+
+                        <!-- Summary -->
+                        <div class="mb-3">
+                            <label for="summary" class="form-label">Summary</label>
+                            <textarea class="form-control" id="summary" th:field="*{summary}" rows="3" required></textarea>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="mb-3">
+                            <label for="content" class="form-label">Content</label>
+                            <textarea class="form-control" id="content" th:field="*{content}" rows="10" required></textarea>
+                        </div>
+
+                        <!-- Image URL -->
+                        <div class="mb-3">
+                            <label for="imageUrl" class="form-label">Featured Image URL</label>
+                            <input type="text" class="form-control" id="imageUrl" th:field="*{imageUrl}">
+                            <div class="form-text">Leave blank if no featured image</div>
+                        </div>
+
+                        <!-- Blog URL -->
+                        <div class="mb-3">
+                            <label for="blogUrl" class="form-label">Custom URL Slug</label>
+                            <input type="text" class="form-control" id="blogUrl" th:field="*{blogUrl}">
+                            <div class="form-text">Optional custom URL for the blog post</div>
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="mb-3">
+                            <label for="tags" class="form-label">Tags (comma separated)</label>
+                            <input type="text" class="form-control" id="tags" th:field="*{tags}">
+                            <div class="form-text">Example: technology, programming, java</div>
+                        </div>
+
+                        <!-- Comments Enabled -->
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" class="form-check-input" id="commentsEnabled" th:field="*{commentsEnabled}">
+                            <label class="form-check-label" for="commentsEnabled">Enable Comments</label>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="bi bi-save"></i> Publish Blog Post
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

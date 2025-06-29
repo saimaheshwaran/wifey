@@ -12,4 +12,6 @@ public interface BlogCommentRepository extends JpaRepository<BlogComment, Long> 
     @Query(value = "select * from blog_comment order by created_at desc", nativeQuery = true)
     List<Contact> getAllByLatestDate();
 
+    BlogComment findBlogCommentById(Long id);
+
 }

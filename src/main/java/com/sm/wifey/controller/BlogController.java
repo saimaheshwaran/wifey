@@ -22,6 +22,7 @@ public class BlogController {
     @GetMapping
     public String getBlog(@RequestParam(defaultValue = "0") int page, HttpServletRequest request, Model model) {
         model.addAttribute("postPage", blogService.blogPostPageRequest(page, 12));
+        model.addAttribute("updateFlag", false);
         model.addAttribute("requestURI", request.getRequestURI());
         model.addAttribute("title", "Blog");
         model.addAttribute("content", "blog/index");

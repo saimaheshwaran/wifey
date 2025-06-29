@@ -23,6 +23,12 @@ public class BlogCommentService {
                         Sort.by(Sort.Direction.DESC, "createdAt")));
     }
 
+    public void toggleCommentVisibility(Long id) {
+        BlogComment comment = blogCommentRepository.findBlogCommentById(id);
+        comment.setShowEnabled(!comment.isShowEnabled());
+        blogCommentRepository.save(comment);
+    }
+
     public List<Contact> getAll() {
         return blogCommentRepository.getAllByLatestDate();
     }

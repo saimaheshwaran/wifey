@@ -26,6 +26,8 @@ public class BlogPost {
     private String content;
 
     private String imageUrl;
+
+    @Column(unique = true)
     private String blogUrl;
 
     private Boolean commentsEnabled;

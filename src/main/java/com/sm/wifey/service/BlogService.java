@@ -34,6 +34,8 @@ public class BlogService {
 
     public List<BlogPost> findBlogPostByTags(List<String> tags) { return blogPostRepository.findBlogPostByTags(tags); }
 
+    public void save(BlogPost blogPost) { blogPostRepository.save(blogPost); }
+
     public void addComment(Long postId, Long comId, BlogComment comment) {
 
         BlogPost post = findBlogPostById(postId);

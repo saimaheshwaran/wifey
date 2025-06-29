@@ -8,8 +8,9 @@
       <th>Author</th>
       <th>Message</th>
       <th>Show</th>
+      <th>Toggle</th>
       <th>Post</th>
-      <th>ParentComment</th>
+      <th>Pid</th>
       <th>Created Date</th>
     </tr>
     </thead>
@@ -18,7 +19,16 @@
       <td th:text="${comment.id}"></td>
       <td th:text="${comment.authorName}"></td>
       <td th:text="${comment.content}"></td>
-      <td th:text="${comment.showEnabled}"></td>
+      <td th:text="${comment.showEnabled} ? 'Yes' : 'No'"></td>
+      <!-- Toggle Button Column -->
+      <td>
+        <form th:action="@{/admin/commentEnabled/toggle/{id}(id=${comment.id})}" method="post" style="display: inline;">
+          <button type="submit" class="btn btn-sm"
+                  th:classappend="${comment.showEnabled} ? 'btn-warning' : 'btn-success'">
+            <span th:text="${comment.showEnabled} ? 'Hide' : 'Show'"></span>
+          </button>
+        </form>
+      </td>
       <td th:text="${comment.post.id}"></td>
       <td th:text="${comment.parentComment.id}" th:if="${comment.parentComment != null}"></td>
       <td th:text="${comment.parentComment}" th:if="${comment.parentComment == null}"></td>
