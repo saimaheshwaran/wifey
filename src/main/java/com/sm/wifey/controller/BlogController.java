@@ -2,7 +2,7 @@ package com.sm.wifey.controller;
 
 import com.sm.wifey.model.BlogComment;
 import com.sm.wifey.model.BlogPost;
-import com.sm.wifey.service.BlogService;
+import com.sm.wifey.service.BlogPostService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -17,11 +17,11 @@ import java.util.List;
 public class BlogController {
 
     @Autowired
-    BlogService blogService;
+    BlogPostService blogPostService;
 
     @GetMapping
     public String getBlog(@RequestParam(defaultValue = "0") int page, HttpServletRequest request, Model model) {
-        model.addAttribute("postPage", blogService.blogPostPageRequest(page, 12));
+        model.addAttribute("postPage", blogPostService.blogPostPageRequest(page, 12));
         model.addAttribute("updateFlag", false);
         model.addAttribute("requestURI", request.getRequestURI());
         model.addAttribute("title", "Blog");
@@ -32,7 +32,7 @@ public class BlogController {
     @GetMapping("/search")
     public String searchBlogs(@RequestParam("query") String query, Model model, HttpServletRequest request) {
 
-        List<BlogPost> searchResults = blogService.searchPosts(query);
+        List<BlogPost> searchResults = blogPostService.searchPosts(query);
         Pageable pageable = PageRequest.of(0, 12);
 
         // Sub-list to simulate pagination
@@ -53,8 +53,8 @@ public class BlogController {
     @GetMapping("/{path}")
     public String getPostByPath(@PathVariable("path") String path, HttpServletRequest request, Model model) {
 
-        BlogPost blogPost = blogService.findBlogPostByBlogUrl(path);
-        List<BlogPost> relatedPosts = blogService.findBlogPostByTags(blogPost.getTags())
+        BlogPost blogPost = blogPostService.findBlogPostByBlogUrl(path);
+        List<BlogPost> relatedPosts = blogPostService.findBlogPostByTags(blogPost.getTags())
                 .stream().filter(post -> !post.getId().equals(blogPost.getId())).toList();;
 
         model.addAttribute("post", blogPost);
@@ -68,14 +68,14 @@ public class BlogController {
 
     @PostMapping("/{postId}/comment")
     public String addComment(@PathVariable Long postId, @RequestParam(required = false) Long comId, BlogComment comment) {
-        blogService.addComment(postId, comId, comment);
-        return "redirect:/blog/" + blogService.findBlogPostById(postId).getBlogUrl();
+        blogPostService.addComment(postId, comId, comment);
+        return "redirect:/blog/" + blogPostService.findBlogPostById(postId).getBlogUrl();
     }
 
     @ResponseBody
     @PostMapping("/{postId}/react/{reaction}")
     public String addReaction(@PathVariable Long postId, @PathVariable String reaction) {
-        int newCount = blogService.addReaction(postId, reaction);
+        int newCount = blogPostService.addReaction(postId, reaction);
         return "{\"success\": true, \"newCount\": " + newCount + "}";
     }
 

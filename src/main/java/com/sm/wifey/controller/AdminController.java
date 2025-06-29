@@ -2,13 +2,11 @@ package com.sm.wifey.controller;
 
 import com.sm.wifey.model.BlogPost;
 import com.sm.wifey.repository.AuthorRepository;
-import com.sm.wifey.repository.BlogPostRepository;
 import com.sm.wifey.service.BlogCommentService;
-import com.sm.wifey.service.BlogService;
+import com.sm.wifey.service.BlogPostService;
 import com.sm.wifey.service.ContactService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -24,13 +22,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @Controller @AllArgsConstructor
 @RequestMapping("admin")
 public class AdminController {
 
-    BlogService blogService;
+    BlogPostService blogPostService;
     ContactService contactService;
     AuthorRepository authorRepository;
     BlogCommentService blogCommentService;
@@ -45,7 +42,7 @@ public class AdminController {
 
     @GetMapping("/blog")
     public String getBlog(@RequestParam(defaultValue = "0") int page, HttpServletRequest request, Model model) {
-        model.addAttribute("postPage", blogService.blogPostPageRequest(page, 12));
+        model.addAttribute("postPage", blogPostService.blogPostPageRequest(page, 12));
         model.addAttribute("updateFlag", true);
         model.addAttribute("requestURI", request.getRequestURI());
         model.addAttribute("title", "Admin/Blog");
@@ -56,7 +53,7 @@ public class AdminController {
     @GetMapping("/blog/{path}")
     public String getPostByPath(@PathVariable("path") String path, HttpServletRequest request, Model model) {
 
-        BlogPost blogPost = blogService.findBlogPostByBlogUrl(path);
+        BlogPost blogPost = blogPostService.findBlogPostByBlogUrl(path);
 
         model.addAttribute("blogPost", blogPost);
         model.addAttribute("authors", authorRepository.findAll());
@@ -79,9 +76,9 @@ public class AdminController {
 
     @PostMapping("/blog/add")
     public String addBlogPost(@ModelAttribute BlogPost blogPost) {
-        BlogPost post = blogService.findBlogPostByBlogUrl(blogPost.getBlogUrl());
+        BlogPost post = blogPostService.findBlogPostByBlogUrl(blogPost.getBlogUrl());
         if(post == null) {
-            blogService.save(blogPost);
+            blogPostService.save(blogPost);
             return "redirect:/admin/blog/add?success";
         }
         else {
@@ -93,10 +90,9 @@ public class AdminController {
             post.setImageUrl(blogPost.getImageUrl());
             post.setTags(blogPost.getTags());
             post.setCommentsEnabled(blogPost.getCommentsEnabled());
-            blogService.save(post);
+            blogPostService.save(post);
             return "redirect:/admin/blog?success";
         }
-
     }
 
     @GetMapping("comment")
