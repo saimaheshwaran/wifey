@@ -30,7 +30,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(auth -> auth
-                       .requestMatchers("/admin/**").hasRole("ADMIN")
+                //        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/", "/image/**", "/register/**", "/login/**"
                                 , "/h2-console/**", "/bootstrap/**", "/fontawesome/**"
                                 , "/general/**","/resources/**", "/about/**"
@@ -51,11 +51,11 @@ public class WebSecurityConfig {
                         .deleteCookies("JSESSIONID")
                         .permitAll()
                 )
-                // .authenticationManager(authenticationManager(http, userDetailService, passwordEncoder()))
+                .authenticationManager(authenticationManager(http, userDetailService, passwordEncoder()))
                 .rememberMe(remember -> remember
                         .key("uniqueAndSecret")
                         .tokenValiditySeconds(86400) // 1 day
-                        .userDetailsService(userdetailService)
+                        // .userDetailsService(userdetailService)
                 )
         ;
 
