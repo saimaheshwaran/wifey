@@ -30,7 +30,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(auth -> auth
-                       .requestMatchers("/admin/**").hasRole("ADMIN")
+                //        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/", "/image/**", "/register/**", "/login/**"
                                 , "/h2-console/**", "/bootstrap/**", "/fontawesome/**"
                                 , "/general/**","/resources/**", "/about/**"
