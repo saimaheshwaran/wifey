@@ -16,7 +16,7 @@
     <!-- Main Content -->
     <div class="col-lg-8">
       <div class="row g-4" >
-        <div class="col-md-6" th:each="post : ${postPage}" th:if="${(!updateFlag) && post.showEnabled}">
+        <div class="col-md-6" th:each="post : ${postPage}" th:if="${updateFlag || post.showEnabled}">
           <div class="card h-100 border-0 shadow-sm card-bg">
             <img th:src="${post.imageUrl}" class="card-img-top" alt="Blog post image">
             <div class="card-body">
