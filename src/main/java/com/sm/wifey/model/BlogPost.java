@@ -30,7 +30,11 @@ public class BlogPost {
     @Column(unique = true)
     private String blogUrl;
 
-    private Boolean commentsEnabled;
+    @Column(nullable = false)
+    private boolean showEnabled = true;
+
+    @Column(nullable = false)
+    private Boolean commentsEnabled = true;
 
     @UpdateTimestamp
     private LocalDate publishedDate;
